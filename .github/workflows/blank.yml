@@ -34,4 +34,4 @@ jobs:
 
       - name: "Show events"
         run: |
-          echo "Event ${{toJson( github.event)}}"
+          echo "Event By ${{toJson( github.actor )}}"
