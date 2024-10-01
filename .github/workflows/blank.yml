@@ -31,3 +31,7 @@ jobs:
           echo "This is a platform value: ${{ env.platform }}"
           echo "This is a region value: ${{ env.region }}"
           echo "This is an account value: ${{ env.account }}"
+
+      - name: "Show events"
+        run: |
+          echo "Event ${{ github.event }}"
