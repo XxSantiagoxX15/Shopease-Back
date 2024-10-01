@@ -31,8 +31,10 @@ jobs:
           echo "This is a platform value: ${{ env.platform }}"
           echo "This is a region value: ${{ env.region }}"
           echo "This is an account value: ${{ env.account }}"
+           echo "Project Version ${{ vars.PROJECT_VERSION }}"
 
       - name: "Show events"
         run: |
           echo "Event By ${{toJson( github.actor )}}"
-           echo "Repositroy ${{toJson( github.repository )}}"
+          echo "Repositroy ${{toJson( github.repository )}}"
+           
