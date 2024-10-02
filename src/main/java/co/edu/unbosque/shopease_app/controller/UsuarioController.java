@@ -2,6 +2,7 @@ package co.edu.unbosque.shopease_app.controller;
 
 
 import co.edu.unbosque.shopease_app.model.UsuarioModel;
+import co.edu.unbosque.shopease_app.service.EmailService;
 import co.edu.unbosque.shopease_app.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +24,16 @@ import java.util.List;
 public class UsuarioController {
 
     @Autowired
-    UsuarioService usuarioService;
+  private  UsuarioService usuarioService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+  private  PasswordEncoder passwordEncoder;
+
+
+    @Autowired
+    private EmailService emailService;
+
+
 
     @PostMapping("/registrar")
     @Operation(summary = "Agregar Usuarios", description = "Agrega el objeto users")
@@ -40,6 +48,11 @@ public class UsuarioController {
             usuario.setContraseña(encryptedPassword);
 
             usuarioService.saveUsuario(usuario);
+            emailService.enviarCorreo(usuario.getEmail(),"Registro ShopEase","¡Hola "+usuario.getNombre()+"!"+"\n"
+                    +"Gracias por registrarse en ShopEase. Ahora puedes acceder a nuestro catálogo y disfrutar de las mejores ofertas.\n"+
+                    "Si tienes alguna duda o necesitas asistencia, no dudes en contactarnos.\n"+
+                    "¡Gracias por confiar en nosotros! \n"+
+                    "Atentamente,\n El equipo de ShopEase");
             return ResponseEntity.ok("Usuario guardado con éxito");
         } catch (Exception e) {
             e.printStackTrace();
