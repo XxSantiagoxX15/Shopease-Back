@@ -1,5 +1,6 @@
 package co.edu.unbosque.shopease_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import lombok.ToString;
 public class ProductoModel {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_producto;
 

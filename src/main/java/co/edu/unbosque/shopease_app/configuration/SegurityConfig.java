@@ -14,6 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SegurityConfig {
     @Bean
+    /* Autor: Santiago
+    Descripcion: Metodo por el cual realizamos la encriptacion de la contraseña con spring Security
+     */
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

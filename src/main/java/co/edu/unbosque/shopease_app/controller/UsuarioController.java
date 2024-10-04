@@ -52,7 +52,7 @@ public class UsuarioController {
                     +"Gracias por registrarse en ShopEase. Ahora puedes acceder a nuestro catálogo y disfrutar de las mejores ofertas.\n"+
                     "Si tienes alguna duda o necesitas asistencia, no dudes en contactarnos.\n"+
                     "¡Gracias por confiar en nosotros! \n"+
-                    "Atentamente,\n El equipo de ShopEase");
+                    "Atentamente.\n El equipo de ShopEase");
             return ResponseEntity.ok("Usuario guardado con éxito");
         } catch (Exception e) {
             e.printStackTrace();
