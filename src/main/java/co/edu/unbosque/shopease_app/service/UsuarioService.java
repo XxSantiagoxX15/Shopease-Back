@@ -12,18 +12,22 @@ import java.util.List;
 
 @Service
 public class UsuarioService {
-    private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+	private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
-    public UsuarioModel saveUsuario(UsuarioModel usuario) {
+	public UsuarioModel saveUsuario(UsuarioModel usuario) {
 
-        UsuarioModel usuarioModel = usuarioRepository.save(usuario);
-        return usuarioModel;
-    }
+		UsuarioModel usuarioModel = usuarioRepository.save(usuario);
+		return usuarioModel;
+	}
 
-    public List<UsuarioModel> findAll(){
-        return usuarioRepository.findAll();
-    }
+	public List<UsuarioModel> findAll(){
+		return usuarioRepository.findAll();
+	}
+
+	public UsuarioModel findByEmail(String email) {
+		return usuarioRepository.findByEmail(email);
+	}
 }

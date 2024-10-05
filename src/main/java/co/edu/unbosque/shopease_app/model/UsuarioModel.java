@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,23 +20,21 @@ import java.sql.Date;
 @Table(name="usuarios")
 public class UsuarioModel {
 
-    @Id
-    private int id_usuario;
+	@Id
+	private int id_usuario;
 
-    @Column(nullable = false)
-    private String nombre;
+	@Column(nullable = false)
+	private String nombre;
 
-    @Column(nullable = false)
-    private String email;
+	@Column(nullable = false)
+	private String email;
 
-    private String telefono;
+	private String telefono;
 
-    private String direccion;
+	private String direccion;
 
-    @Column(nullable = false)
-    private String contraseña;
+	@Column(nullable = false)
+	private String contraseña;
 
-    private Date fecha_registro;
-
-
+	private Date fecha_registro;
 }
