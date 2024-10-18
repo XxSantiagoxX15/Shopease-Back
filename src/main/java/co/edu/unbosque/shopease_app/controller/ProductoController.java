@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Transactional
 @CrossOrigin(origins = { "http://localhost:8090", "http://localhost:8080", "*" })
 @RestController
@@ -92,4 +91,5 @@ public class ProductoController {
                     .body("Error al eliminar la producto: " + e.getMessage());
         }
     }
+
 }
