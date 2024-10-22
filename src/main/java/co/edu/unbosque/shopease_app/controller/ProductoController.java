@@ -97,22 +97,6 @@ public class ProductoController {
 		}
 	}
 
-	@GetMapping("/por-categoria")
-	@Operation(summary = "Obtener productos organizados por categoría", description = "Devuelve una lista de productos agrupados por categoría en formato JSON")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Productos encontrados"),
-			@ApiResponse(responseCode = "404", description = "Productos no encontrados")
-	})
-	public ResponseEntity<Map<Integer, List<ProductoModel>>> obtenerProductosPorCategoria() {
-		Map<Integer, List<ProductoModel>> productosPorCategoria = productoService.obtenerProductosPorCategoria();
-
-        ProductoModel actualizarProducto= productoService.updateProducto(id,productoModel);
-        if (actualizarProducto != null) {
-            return ResponseEntity.ok(actualizarProducto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
     @DeleteMapping("/eliminar/{id}")
     @Operation(summary = "Eliminar Producto", description = "Elimina una Producto por su ID.")
     @ApiResponses(value = {
