@@ -77,13 +77,6 @@ public class ProductoService {
 	}
 
 
-	public List<ProductoModel> findAll(){
-		return productoRepository.findAll();
-	}
 
-	public Map<Integer, List<ProductoModel>> obtenerProductosPorCategoria() {
-		List<ProductoModel> productos = productoRepository.findAll();
-		return productos.stream().collect(Collectors.groupingBy(ProductoModel::getId_categoria));
-	}
 
 }
