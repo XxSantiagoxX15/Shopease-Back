@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
@@ -47,4 +49,26 @@ public class ProductoService {
     public List<ProductoModel> findAll(){
         return productoRepository.findAll();
     }
+
+    	public Map<Object, List<ProductoModel>> obtenerProductosOrdenadosPorNombreCategoria() {
+
+		// Obtener todas las categorías
+		List<CategoriaModel> categorias = categoriaService.findAll();
+
+		// Crear un mapa para las categorías por ID para búsqueda rápida
+		Map<Integer, String> idCategoriaANombre = categorias.stream()
+				.collect(Collectors.toMap(CategoriaModel::getId_categoria, CategoriaModel::getNombre));
+
+
+		// Obtener todos los productos
+		List<ProductoModel> productos = findAll();
+
+		// Agrupar productos por nombre de categoría
+		Map<Object, List<ProductoModel>> productosOrdenadosPorCategoria = productos.stream()
+				.filter(producto -> idCategoriaANombre.containsKey(producto.getId_categoria()))
+				.collect(Collectors.groupingBy(producto -> idCategoriaANombre.get(producto.getId_categoria()), TreeMap::new, Collectors.toList()));
+
+		return productosOrdenadosPorCategoria;
+	}
+
 }

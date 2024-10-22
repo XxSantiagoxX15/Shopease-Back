@@ -92,4 +92,21 @@ public class ProductoController {
         }
     }
 
+    @GetMapping("/productos-ordenados-por-categoria")
+	@Operation(summary = "Obtener productos ordenados por categoría", description = "Devuelve una lista de productos agrupados y ordenados por el nombre de la categoría en formato JSON")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Productos encontrados y ordenados"),
+			@ApiResponse(responseCode = "404", description = "Productos o categorías no encontrados")
+	})
+	public ResponseEntity<Map<Object, List<ProductoModel>>> obtenerProductosOrdenadosPorNombreCategoria() {
+		// Obtener el mapa de productos ordenados por nombre de categoría desde el servicio
+		Map<Object, List<ProductoModel>> productosOrdenadosPorCategoria = productoService.obtenerProductosOrdenadosPorNombreCategoria();
+
+		if (productosOrdenadosPorCategoria.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+		return ResponseEntity.ok(productosOrdenadosPorCategoria);
+	}
+
 }
