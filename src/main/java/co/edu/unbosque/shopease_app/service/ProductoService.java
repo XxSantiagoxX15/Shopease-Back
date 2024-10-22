@@ -10,41 +10,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import java.util.TreeMap;
+
+import java.util.Map;
+
 import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
-    private final Logger logger = LoggerFactory.getLogger(ProductoService.class);
+	private final Logger logger = LoggerFactory.getLogger(ProductoService.class);
 
-    @Autowired
-    private ProductoRepository productoRepository;
+	@Autowired
+	private ProductoRepository productoRepository;
 
 
-    public ProductoModel saveProducto(ProductoModel producto) {
+	public ProductoModel saveProducto(ProductoModel producto) {
 
-        ProductoModel productoModel = productoRepository.save(producto);
-        return productoModel;
-    }
+		ProductoModel productoModel = productoRepository.save(producto);
+		return productoModel;
+	}
 
-    public ProductoModel updateProducto(int id, ProductoModel producto) {
-        if (productoRepository.existsById(id)) {
-            producto.setId_producto(id);
-            return productoRepository.save(producto);
-        } else {
-            return null;
-        }
+	public ProductoModel updateProducto(int id, ProductoModel producto) {
+		if (productoRepository.existsById(id)) {
+			producto.setId_producto(id);
+			return productoRepository.save(producto);
+		} else {
+			return null;
+		}
 
-    }
+	}
 
-    public Boolean deleteProducto(int id) {
-        if (productoRepository.existsById(id)) { // Verifica si la producto existe
-            productoRepository.deleteById(id); // Elimina directamente por id
-            return true;
-        } else {
-            throw new EntityNotFoundException("El producto con ID " + id + " no existe.");
-        }
-    }
+	public Boolean deleteProducto(int id) {
+		if (productoRepository.existsById(id)) {
+			productoRepository.deleteById(id); 
+			return true;
+		} else {
+			throw new EntityNotFoundException("El producto con ID " + id + " no existe.");
+		}
+	}
+
 
     public List<ProductoModel> findAll(){
         return productoRepository.findAll();
@@ -69,6 +74,16 @@ public class ProductoService {
 				.collect(Collectors.groupingBy(producto -> idCategoriaANombre.get(producto.getId_categoria()), TreeMap::new, Collectors.toList()));
 
 		return productosOrdenadosPorCategoria;
+	}
+
+
+	public List<ProductoModel> findAll(){
+		return productoRepository.findAll();
+	}
+
+	public Map<Integer, List<ProductoModel>> obtenerProductosPorCategoria() {
+		List<ProductoModel> productos = productoRepository.findAll();
+		return productos.stream().collect(Collectors.groupingBy(ProductoModel::getId_categoria));
 	}
 
 }
