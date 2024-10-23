@@ -2,19 +2,18 @@ package co.edu.unbosque.shopease_app.service;
 
 import co.edu.unbosque.shopease_app.model.CategoriaModel;
 import co.edu.unbosque.shopease_app.model.ProductoModel;
+import co.edu.unbosque.shopease_app.repository.CategoriaRepository;
 import co.edu.unbosque.shopease_app.repository.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import java.util.TreeMap;
-
 import java.util.Map;
-
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +22,9 @@ public class ProductoService {
 
 	@Autowired
 	private ProductoRepository productoRepository;
+
+	@Autowired 
+	private CategoriaService categoriaService;
 
 
 	public ProductoModel saveProducto(ProductoModel producto) {
@@ -50,12 +52,12 @@ public class ProductoService {
 		}
 	}
 
+	public List<ProductoModel> findAll(){
+		return productoRepository.findAll();
+	}
 
-    public List<ProductoModel> findAll(){
-        return productoRepository.findAll();
-    }
 
-    	public Map<Object, List<ProductoModel>> obtenerProductosOrdenadosPorNombreCategoria() {
+	public Map<Object, List<ProductoModel>> obtenerProductosOrdenadosPorNombreCategoria() {
 
 		// Obtener todas las categorías
 		List<CategoriaModel> categorias = categoriaService.findAll();
@@ -75,8 +77,5 @@ public class ProductoService {
 
 		return productosOrdenadosPorCategoria;
 	}
-
-
-
 
 }
