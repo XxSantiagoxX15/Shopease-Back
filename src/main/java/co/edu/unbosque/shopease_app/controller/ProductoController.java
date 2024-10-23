@@ -1,7 +1,9 @@
 package co.edu.unbosque.shopease_app.controller;
 
 
+import co.edu.unbosque.shopease_app.model.CategoriaModel;
 import co.edu.unbosque.shopease_app.model.ProductoModel;
+import co.edu.unbosque.shopease_app.service.CategoriaService;
 import co.edu.unbosque.shopease_app.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 import java.util.Map;
+import java.util.TreeMap;
 
 @Transactional
 @CrossOrigin(origins = { "http://localhost:8090", "http://localhost:8080", "*" })
@@ -28,6 +30,9 @@ public class ProductoController {
 
 	@Autowired
 	private ProductoService productoService;
+
+	@Autowired
+	private CategoriaService categoriaService;
 
 	@PostMapping("/crear")
 	@Operation(summary = "Crear Producto", description = "Crea un producto de acuerdo a un cuerpo JSON.")
@@ -97,29 +102,8 @@ public class ProductoController {
 		}
 	}
 
-    @DeleteMapping("/eliminar/{id}")
-    @Operation(summary = "Eliminar Producto", description = "Elimina una Producto por su ID.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Producto eliminada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Producto no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    public ResponseEntity<String> eliminarProducto(@PathVariable int id) {
-        try {
-            boolean isRemoved = productoService.deleteProducto(id);
-            if (isRemoved) {
-                return ResponseEntity.ok("Producto eliminada exitosamente.");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrada.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // Considera usar un logger
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al eliminar la producto: " + e.getMessage());
-        }
-    }
 
-    @GetMapping("/productos-ordenados-por-categoria")
+	@GetMapping("/productos-ordenados-por-categoria")
 	@Operation(summary = "Obtener productos ordenados por categoría", description = "Devuelve una lista de productos agrupados y ordenados por el nombre de la categoría en formato JSON")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Productos encontrados y ordenados"),
@@ -134,14 +118,6 @@ public class ProductoController {
 		}
 
 		return ResponseEntity.ok(productosOrdenadosPorCategoria);
-	}
-
-
-		if (!productosPorCategoria.isEmpty()) {
-			return ResponseEntity.ok(productosPorCategoria);
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
 	}
 
 }
